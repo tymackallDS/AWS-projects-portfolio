@@ -1,4 +1,3 @@
-# installs aws-cli and an autoprompt for the command prompt
 tasks:
   - name: aws-cli
     env:
