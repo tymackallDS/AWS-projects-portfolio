@@ -28,7 +28,9 @@ FILENAME_PREFIX=$2
 OUTPUT_DIR="/tmp/s3-bash-scripts"
 
 #remove files if they are already in temp dir
-rm -r $OUTPUT_DIR
+if [ -d "$OUTPUT_DIR" ] && [ "$(ls -A $OUTPUT_DIR)" ]; then
+    rm -r $OUTPUT_DIR
+fi
 
 # Create output folder
 
