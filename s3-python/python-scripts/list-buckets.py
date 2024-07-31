@@ -21,5 +21,11 @@ buckets = response['Buckets']
 # Sort buckets by creation date, most recent first
 sorted_buckets = sorted(buckets, key=lambda b: b['CreationDate'], reverse=True)
 
-for bucket in sorted_buckets:
-  print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
+#check and see if there are more than 10 buckets. if so then only display 10
+if len(buckets) >= 10:
+  sorted_buckets_to_display = sorted_buckets[:5]
+  for bucket in sorted_buckets_to_display:
+    print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
+else:
+  for bucket in sorted_buckets:
+    print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
