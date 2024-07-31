@@ -7,6 +7,7 @@
 #import boto
 import boto3
 
+print("Listing buckets...")
 # initialize a session using s3
 s3 = boto3.client('s3')
 
@@ -23,9 +24,7 @@ sorted_buckets = sorted(buckets, key=lambda b: b['CreationDate'], reverse=True)
 
 #check and see if there are more than 10 buckets. if so then only display 10
 if len(buckets) >= 10:
-  sorted_buckets_to_display = sorted_buckets[:5]
-  for bucket in sorted_buckets_to_display:
-    print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
-else:
-  for bucket in sorted_buckets:
-    print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
+  sorted_buckets = sorted_buckets[:10]
+  
+for bucket in sorted_buckets:
+  print(f"Bucket Name: {bucket['Name']}, Creation Date: {bucket['CreationDate']}")
