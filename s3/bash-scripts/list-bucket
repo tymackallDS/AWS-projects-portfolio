@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+#list buckets 
 echo "== list bucket"
 
 aws s3 ls
