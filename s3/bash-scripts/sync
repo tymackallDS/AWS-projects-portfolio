@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
+
+##This script creates and uploads files to an S3 bucket##
+
 echo "== sync"
+
 # Exit if command returns a non-zero status
 set -e
 
