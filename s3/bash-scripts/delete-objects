@@ -25,8 +25,8 @@ fi
 
 # Print and delete each object
 for KEY in $OBJECTS; do
-    echo "Found object: $KEY"
-    echo "Deleting object: $KEY"
+    # echo "Found object: $KEY"
+    # echo "Deleting object: $KEY"
     aws s3api delete-object --bucket "$BUCKET_NAME" --key "$KEY"
 done
 
