@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+echo "== delete-object"
+
+
+set -e
+
+
 #check for bucket name
 if [ -z "$1" ]; then
     echo "There needs to be a bucket name eg. ./bucket my-bucket-name"
@@ -8,7 +14,4 @@ fi
 
 BUCKET_NAME=$1
 
-aws s3api delete-bucket \
---bucket $BUCKET_NAME
-
-echo "$BUCKET_NAME"
+aws s3api delete-objects --buckets $BUCKET_NAME
