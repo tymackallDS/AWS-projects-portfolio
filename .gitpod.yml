@@ -6,6 +6,8 @@ tasks:
       sudo apt-get install tree
   
   #######################################
+  
+  ## POWERSHELL VID at 3:07:28 by andrew brown link: https://www.youtube.com/watch?v=c3Cn4xYfxJY&t=9459s
   #configures and installs powershell pwsh https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.4
   - name: powershell
     before: |
@@ -17,7 +19,9 @@ tasks:
       rm packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y powershell
-  
+  # https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-set-up-windows.html
+  # pwsh
+
   ########################################
   - name: aws-cli
     env:
