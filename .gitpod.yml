@@ -1,5 +1,14 @@
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
+#installs latest python version and boto3 which allows python to interact with AWS CLI
+  - name: myenvi
+    channels: 
+      - defaults
+    dependencies:
+      - python
+      - boto3
+    
+
   - name: utils
     before: |
       sudo apt-get install tree

@@ -22,4 +22,4 @@ def delete_objects(bucket_name):
         print(f"Error: {e}")
 
 # Replace 'your-bucket-name' with your actual bucket name
-delete_objects('your-bucket-name: ')
+delete_objects('your-bucket-name')
