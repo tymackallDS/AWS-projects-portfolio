@@ -31,6 +31,3 @@ for KEY in $OBJECTS; do
 done
 
 echo "All objects in bucket '$BUCKET_NAME' have been deleted."
-
-aws s3api delete-objects --buckets $BUCKET_NAME
-
