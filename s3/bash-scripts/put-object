@@ -27,3 +27,5 @@ aws s3api put-object \
 --bucket $BUCKET_NAME \
 --body $FILENAME \
 --key $OBJECT_KEY
+
+#create a temp file touch /tmp/newfile.txt

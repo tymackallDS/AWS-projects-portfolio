@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "== delete-object"
+echo "== delete-objects"
 
 
 set -e
@@ -14,6 +14,6 @@ fi
 
 BUCKET_NAME=$1
 
-$(aws s3api delete-bucket --bucket $BUCKET_NAME)
+
 aws s3api delete-objects --buckets $BUCKET_NAME
 
