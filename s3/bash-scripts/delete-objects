@@ -18,16 +18,20 @@ BUCKET_NAME=$1
 OBJECTS=$(aws s3api list-objects-v2 --bucket "$BUCKET_NAME" --query 'Contents[].{Key:Key}' --output text)
 
 # Check if there are any objects to delete
-if [ -z "$OBJECTS" ]; then
+# Check if there are any objects to delete
+if [ -z "$OBJECTS" ] || [ "$OBJECTS" = "None" ]; then
     echo "Bucket is empty or does not exist."
     exit 0
 fi
 
 # Print and delete each object
 for KEY in $OBJECTS; do
-    # echo "Found object: $KEY"
-    # echo "Deleting object: $KEY"
-    aws s3api delete-object --bucket "$BUCKET_NAME" --key "$KEY"
+    # Ensure the key is not empty (handles edge cases where OBJECTS might have unexpected characters)
+    if [ -n "$KEY" ]; then
+        echo "Found object: $KEY"
+        echo "Deleting object: $KEY"
+        aws s3api delete-object --bucket "$BUCKET_NAME" --key "$KEY"
+    fi
 done
 
 echo "All objects in bucket '$BUCKET_NAME' have been deleted."
