@@ -10,6 +10,6 @@ BUCKET_NAME=$1
 
 aws s3api list-objects-v2 \
 --bucket $BUCKET_NAME \
---object table
+--output table
 
 echo "$BUCKET_NAME"
