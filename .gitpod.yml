@@ -1,5 +1,10 @@
 # List the start up tasks. Learn more: https://www.gitpod.io/docs/configure/workspaces/tasks
 tasks:
+##################################################
+  - name: python
+    before: |
+      pip install python
+###################################################
   #######################################
   - name: utils
     before: |
