@@ -9,6 +9,7 @@ tasks:
     before: |
       pip install python
       pip install boto3
+      pip install pandas
 ###################################################
   #######################################
   - name: utils
