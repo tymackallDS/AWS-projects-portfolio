@@ -3,8 +3,8 @@ tasks:
 ##################################################
   - name: python
     before: |
-      pip install python
-      pip isntall boto3
+      sudo spt-get python
+      pip install boto3
 ###################################################
   #######################################
   - name: utils
