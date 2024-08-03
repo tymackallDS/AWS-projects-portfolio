@@ -8,7 +8,7 @@ import random  # For generating random numbers
 import uuid  # For generating universally unique identifiers (UUIDs)
 
 # Set the environment variable for the S3 bucket name (for testing)
-os.environ['BUCKET_NAME'] = 'test-bucket-ty1'
+####os.environ['BUCKET_NAME'] = 'test-bucket-ty1'### IGNORE this lets me set a 
 
 # Set up a client to interact with Amazon S3 using Python's boto3 library
 s3 = boto3.client('s3')
