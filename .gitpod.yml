@@ -4,6 +4,7 @@ tasks:
   - name: python
     before: |
       pip install python
+      pip isntall boto3
 ###################################################
   #######################################
   - name: utils
