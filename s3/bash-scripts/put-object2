@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+# This line specifies the script interpreter to be bash. It ensures that the script runs with the Bash shell,
+# regardless of what shell the user is using. The `env` command finds the bash executable in the user's PATH.
+
+## Clones a GitHub repository, selects specific files, and syncs them to an S3 bucket ##
+# This is a comment to describe what the script does at a high level.
+
+echo "Cloning GitHub repository and uploading specific files to S3 bucket..."
+# Outputs a message to the console, informing the user about the script's actions.
+
+# Check for repository URL
+if [ -z "$1" ]; then
+    echo "There needs to be a GitHub repository URL. Usage: ./upload.sh https://github.com/user/repo.git my-s3-bucket-name file1 file2 file3"
+    exit 1
+fi
+# The `if [ -z "$1" ]` statement checks if the first argument (the GitHub repository URL) is empty.
+# If it is, the script echoes an error message explaining the correct usage of the script, and then exits with status 1 (indicating an error).
+
+# Check for bucket name
+if [ -z "$2" ]; then
+    echo "There needs to be a bucket name. Usage: ./upload.sh https://github.com/user/repo.git my-s3-bucket-name file1 file2 file3"
+    exit 1
+fi
+# Similarly, this checks if the second argument (the S3 bucket name) is empty.
+# If empty, it echoes an error message and exits the script with an error status.
+
+# Check for at least one file to upload
+if [ -z "$3" ]; then
+    echo "You need to specify at least one file to upload. Usage: ./upload.sh https://github.com/user/repo.git my-s3-bucket-name file1 file2 file3"
+    exit 1
+fi
+# This checks if the third argument (the first file to upload) is empty.
+# If no file is provided, it echoes an error message and exits the script.
+
+REPO_URL=$1
+BUCKET_NAME=$2
+shift 2
+# Here, the script assigns the first argument ($1) to the variable REPO_URL (the GitHub repository URL).
+# It also assigns the second argument ($2) to BUCKET_NAME (the S3 bucket name).
+# The `shift 2` command shifts the positional parameters to the left by 2, so that $1 now refers to the third argument (the first file), $2 to the fourth argument, and so on.
+
+# Clone the GitHub repository
+git clone $REPO_URL repo-temp
+# This command clones the GitHub repository specified by REPO_URL into a directory named `repo-temp`.
+# The `git clone` command creates a new directory (repo-temp) and downloads the contents of the repository into that directory.
+
+# Check if the clone was successful
+if [ $? -ne 0 ]; then
+    echo "Failed to clone the repository. Please check the URL and try again."
+    exit 1
+fi
+# This checks if the previous command (git clone) was successful.
+# `$?` holds the exit status of the last executed command. If it is not equal to 0, it indicates an error.
+# If the clone failed, the script echoes an error message and exits with an error status.
+
+# Create a temporary directory for selected files
+mkdir selected-files
+# This creates a new directory named `selected-files` where the specific files to be uploaded will be copied.
+# The `mkdir` command is used to create this directory.
+
+# Loop through all specified files and copy them to the temporary directory
+for FILE in "$@"; do
+    if [ -f "repo-temp/$FILE" ]; then
+        cp "repo-temp/$FILE" selected-files/
+    else
+        echo "Warning: $FILE does not exist in the repository. Skipping..."
+    fi
+done
+# The `for FILE in "$@"; do` loop iterates over each of the remaining arguments (which are now the file paths).
+# `"$@"` is a special parameter that expands to all the positional parameters (all the files passed to the script).
+# Inside the loop, `if [ -f "repo-temp/$FILE" ]; then` checks if the file exists in the cloned repository.
+# If the file exists (`-f` checks if it's a regular file), it uses the `cp` command to copy the file from the `repo-temp` directory to the `selected-files` directory.
+# If the file doesn't exist, it echoes a warning message and skips that file.
+
+# Sync the selected files to the S3 bucket
+aws s3 sync ./selected-files s3://$BUCKET_NAME
+# This command uses the AWS CLI `aws s3 sync` to synchronize the contents of the `selected-files` directory to the specified S3 bucket.
+# The `s3://$BUCKET_NAME` is the destination, and `./selected-files` is the source directory.
+# This command uploads all files in the `selected-files` directory to the S3 bucket, preserving the directory structure.
+
+# Clean up by removing the cloned repository and the temporary directory
+rm -rf repo-temp selected-files
+# After the files are uploaded, this command removes the temporary `repo-temp` directory (where the repository was cloned) and the `selected-files` directory.
+# The `-rf` flags are used to forcefully remove directories and their contents recursively, without prompting for confirmation.
+
+echo "Upload complete."
+# Finally, the script echoes a message indicating that the upload is complete.
